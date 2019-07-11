@@ -1,21 +1,156 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+$colors: (
+    bg: #0B2545,
+    font-color: #F5B0CB,
+    bg-card: #5E7CE2,
+);
+
+$padding: 15px;
+$borders: 15px;
+$letter-spacing: 5px;
+$desktop: 840px;
+
+@mixin desktop {
+    @media (min-width: #{$desktop}) {
+        @content;
+    }
 }
 
-$color: #0B2545;
-$font-color: #F5B0CB;
+@function color($color-name) {
+    @return map-get($colors, $color-name);
+};
 
+body, html {
+    height: 100%;
+}
 
 body {
-    background-color: $color;
-    clip-path: polygon(0 0, 100% 0, 100% 50%, 0% 100%);
+
+    font-family: 'Montserrat', sans-serif;
+    margin: 0;
+
+    #bg {
+        background-color: color(bg);
+        clip-path: polygon(100% 0, 100% 68%, 60% 100%, 0 100%, 0 0);
+        height: 100%;
+        width: 100%;
+        position: absolute;
+        z-index: -1;
+
+        @include desktop() {
+            clip-path: polygon(0 0, 75% 0, 55% 100%, 0% 100%);
+        }
+    }
     
-    
-    h1 {
+    header a {
+        text-decoration: none;
+        color: color(font-color);
+        padding: $padding;
+        display: block;
+        text-transform: uppercase;
+        letter-spacing: $letter-spacing - 2;
+
+        @include desktop() {
+            font-size: 2em;
+            margin: .5em 0 0 .5em;
+        }
+    }
+}
+
+main {
+
+
+    @include desktop() {
+        display: grid;
+        grid-template-columns: 50% auto;
+        grid-template-areas: "primary card";
+    }
+
+    section#card {
+        background: #fff;
+        padding: $padding + 5;
+        margin: 1em auto;
+        border-radius: $borders;
+        box-shadow: 0 10px 30px rgba(0,0,0,.2);
+        width: 80%;
+
+        @include desktop() {
+            grid-area: card;
+            height: fit-content;
+            align-self: center;
+            margin: 1em;
+        }
+        
+        ul {
+            list-style-type: none;
+            margin: 0; padding: 0;
+
+            li {
+                color: color(bg);
+                margin-bottom: 10px;
+
+                span {
+                    position: absolute;
+                    width: 20px;
+                    height: 20px;
+                    border-radius: 50%;
+                    margin-right: 10px;
+                    background-color: #356D9C;
+                }
+
+                strong {
+                    display: inline-block;
+                    margin-left: 40px;
+                }
+            }
+        }
+    }
+
+    section#primary {
+        color: color(font-color);
+        padding: $padding;
         text-align: center;
-        color: $font-color;
-        font-family: 'Montserrat', sans-serif;
+
+        @include desktop() {
+            grid-area: primary;
+            text-align: left;
+            margin: 4em 0 0 4em;
+        }
+
+
+        h1 {
+            font-size: 3em;
+            margin-top:10px;
+            text-transform: uppercase;
+
+            @include desktop() {
+                width: 30%;
+                font-size: 4em;
+                line-height: .9em;
+            }
+        }
+
+        p {
+            font-size: 1.4em;
+        }
+
+        a {
+            // color: color(bg);
+            color: #FFF;
+            border-radius: $borders;
+            text-decoration: none;
+            text-transform: uppercase;
+            font-weight: bold;
+            font-size: 1.2em;
+            background-color: color(bg-card);
+            display: block;
+            text-align: center;
+            margin: 50px auto 0 auto;
+            padding: $padding;
+
+            @include desktop() {
+                display: inline-block;
+                padding: $padding $padding * 4;
+            }
+        }
     }
 }
